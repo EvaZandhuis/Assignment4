@@ -10,6 +10,7 @@
 # slightly modified by bmmeijers
 
 import sys
+import csv
 from math import sqrt, pi as PI
 
 
@@ -119,6 +120,20 @@ def main(n, ref="sun"):
     advance(0.01, n)
     report_energy()
 
+# output to a csv file from: https://www.codingem.com/python-write-to-csv-file/
+data = ["This", "is", "Test"]
+# data_sun =
+print()
+
+# with open('results.csv', 'w') as file:
+    # item = [0]
+    # for item <= len(range(amount_of_bodies)):
+    #     writer.writerow(body_name, position x, position y, position z)
+    #     item += 1
+        # writer = csv.writer(file)
+        # writer.writerow(data)
+
+main(10, 'sun')
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
@@ -129,3 +144,11 @@ if __name__ == "__main__":
         print("Call this program with an integer as program argument")
         print("(to set the number of iterations for the n-body simulation).")
         sys.exit(1)
+
+"""Adapt both the Python and the C++ code to output a CSV file, 
+that stores (at least) the 3D position of the bodies in the simulation 
+for each time step at which the simulation is calculated. Per time step 
+per body (Sun, Earth, . . . ) a line should be present in the CSV file 
+with on every line:
+name of the body, position x, position y, position z"""
+
