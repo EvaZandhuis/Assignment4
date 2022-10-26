@@ -14,6 +14,7 @@
 #define _USE_MATH_DEFINES // https://docs.microsoft.com/en-us/cpp/c-runtime-library/math-constants?view=msvc-160
 #include <cmath>
 #include <iostream>
+#include <fstream>
 
 
 // these values are constant and not allowed to be changed
@@ -26,7 +27,7 @@ class vector3d { //The class
 public:             // Access specifier
     double x, y, z; // double= deal with huge decimal numbers // x,y,z var
 
-    double norm() const noexcept {
+    double norm() const noexcept { //norm value of complex
         return x * x + y * y + z * z;
     }
 
@@ -133,6 +134,10 @@ void advance(body state[BODIES_COUNT], double dt) {
      */
     for (unsigned int i = 0; i < BODIES_COUNT; ++i) {
         state[i].position += state[i].velocity * dt;
+        std::ofstream myFile( "position.csv", std::ios::app ) ;
+        myFile << state[i].name<< ";"<< state[i].position.x<< ";" << state[i].position.y << ";" << state[i].position.y <<"\n";
+        myFile.close();
+        std::cout << state[i].name<< ";"<< state[i].position.x<< ";" << state[i].position.y << ";" << state[i].position.y <<"\n";
     }
 }
 
@@ -246,6 +251,9 @@ int main(int argc, char **argv) {
         std::cout << "(to set the number of iterations for the n-body simulation)." << std::endl;
         return EXIT_FAILURE;
     } else {
+        std::ofstream myFile("position.csv" );
+        myFile << "name of the body ; position x ; position y ; position z" "\n";
+        myFile.close();
         const unsigned int n = atoi(argv[1]);
         offset_momentum(state);
         std::cout << energy(state) << std::endl;
