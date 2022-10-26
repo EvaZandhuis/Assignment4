@@ -9,6 +9,7 @@
 # modified by Andriy Misyura
 # slightly modified by bmmeijers
 
+import os
 import sys
 import csv
 from math import sqrt, pi as PI
@@ -100,7 +101,9 @@ def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
         e -= (m1 * m2) / ((dx * dx + dy * dy + dz * dz) ** 0.5)
     for (r, [vx, vy, vz], m) in bodies:
         e += m * (vx * vx + vy * vy + vz * vz) / 2.0
-    print("Energy: %.9f" % e)
+    # print("Energy: %.9f" % e)
+    # print('x =', x2, 'y =', y2,'z =', z2,)
+    return x2, y2, z2
 
 
 def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
@@ -113,27 +116,43 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
     v[1] = py / m
     v[2] = pz / m
 
+# original
+# def main(n, ref="sun"):
+#     offset_momentum(BODIES[ref])
+#     report_energy()
+#     advance(0.01, n)
+#     report_energy()
 
-def main(n, ref="sun"):
+
+# adjusted
+row_list = []
+def main(n, ref):
     offset_momentum(BODIES[ref])
     report_energy()
-    advance(0.01, n)
-    report_energy()
+    step = 0
+    while step < n:
+        advance(0.01, step)
+        new_list = [ref, report_energy()[0], report_energy()[1], report_energy()[2]]
+        report_energy()
+        row_list.append(new_list)
+        step += 1
+    return row_list
 
-# output to a csv file from: https://www.codingem.com/python-write-to-csv-file/
-data = ["This", "is", "Test"]
-# data_sun =
-print()
 
-# with open('results.csv', 'w') as file:
-    # item = [0]
-    # for item <= len(range(amount_of_bodies)):
-    #     writer.writerow(body_name, position x, position y, position z)
-    #     item += 1
-        # writer = csv.writer(file)
-        # writer.writerow(data)
+n = 3
+a = main(n, 'sun')
+main(n, 'jupiter')
+main(n, 'saturn')
+main(n, 'uranus')
+main(n, 'neptune')
 
-main(10, 'sun')
+with open('results.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Body', 'x', 'y', 'z'])
+    for item in a:
+        writer.writerow(item)
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
@@ -144,6 +163,10 @@ if __name__ == "__main__":
         print("Call this program with an integer as program argument")
         print("(to set the number of iterations for the n-body simulation).")
         sys.exit(1)
+
+
+
+
 
 """Adapt both the Python and the C++ code to output a CSV file, 
 that stores (at least) the 3D position of the bodies in the simulation 
