@@ -16,5 +16,5 @@ print("Elapsed time during the whole program in seconds:",
 plt.plot(n_list, duration)
 plt.xlabel("x")
 plt.ylabel("y")
-plt.loglog()
+#plt.loglog()
 plt.show()

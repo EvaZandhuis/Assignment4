@@ -258,7 +258,7 @@ int main(int argc, char **argv) {
         std::istringstream (argv[2]) >> printf;
         if(printf){
             std::ofstream myFile("position.csv" );
-            myFile << "Name of the body ; position x ; position y ; position z" "\n";
+            myFile << "name of the body ; position x ; position y ; position z" "\n";
             myFile.close();}
         offset_momentum(state);
         std::cout << energy(state) << std::endl;
