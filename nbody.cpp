@@ -15,6 +15,8 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <sstream>
 
 
 // these values are constant and not allowed to be changed
@@ -137,7 +139,6 @@ void advance(body state[BODIES_COUNT], double dt) {
         std::ofstream myFile( "position.csv", std::ios::app ) ;
         myFile << state[i].name<< ";"<< state[i].position.x<< ";" << state[i].position.y << ";" << state[i].position.y <<"\n";
         myFile.close();
-        std::cout << state[i].name<< ";"<< state[i].position.x<< ";" << state[i].position.y << ";" << state[i].position.y <<"\n";
     }
 }
 
@@ -245,16 +246,19 @@ body state[] = {
 
 
 int main(int argc, char **argv) {
-    if (argc != 2) {
+    if (argc != 3) {
         std::cout << "This is " << argv[0] << std::endl;
         std::cout << "Call this program with an integer as program argument" << std::endl;
         std::cout << "(to set the number of iterations for the n-body simulation)." << std::endl;
         return EXIT_FAILURE;
     } else {
+        const unsigned int n = atoi(argv[1]);
+        bool print;
+        std::istringstream (argv[2]) >> print;
+        if(print){
         std::ofstream myFile("position.csv" );
         myFile << "name of the body ; position x ; position y ; position z" "\n";
-        myFile.close();
-        const unsigned int n = atoi(argv[1]);
+        myFile.close();}
         offset_momentum(state);
         std::cout << energy(state) << std::endl;
         for (int i = 0; i < n; ++i) {
