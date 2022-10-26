@@ -9,11 +9,13 @@
 # modified by Andriy Misyura
 # slightly modified by bmmeijers
 
-import os
+
+import time
 import sys
 import csv
 from math import sqrt, pi as PI
 
+start_time = time.process_time()
 
 def combinations(l):
     result = []
@@ -139,7 +141,7 @@ def main(n, ref):
     return row_list
 
 
-n = 3
+n = 100
 a = main(n, 'sun')
 main(n, 'jupiter')
 main(n, 'saturn')
@@ -153,6 +155,11 @@ with open('results.csv', 'w', newline='') as file:
         writer.writerow(item)
 
 
+
+# https://stackoverflow.com/questions/1557571/how-do-i-get-time-of-a-python-programs-execution
+# cpu time instead of wall time:
+# https://pynative.com/python-get-execution-time-of-program/
+print("--- %s seconds ---" % (time.process_time() - start_time))
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
