@@ -22,9 +22,9 @@ const double DAYS_PER_YEAR = 365.24;
 const unsigned int BODIES_COUNT = 5;
 
 
-class vector3d {
-public:
-    double x, y, z;
+class vector3d { //The class
+public:             // Access specifier
+    double x, y, z; // double= deal with huge decimal numbers // x,y,z var
 
     double norm() const noexcept {
         return x * x + y * y + z * z;
