@@ -97,7 +97,7 @@ public:
 };
 
 
-void advance(body state[BODIES_COUNT], double dt) {
+void advance(body state[BODIES_COUNT], double dt , bool printf) {
     /*
      * We precompute the quantity (r_i - r_j)
      */
@@ -136,9 +136,10 @@ void advance(body state[BODIES_COUNT], double dt) {
      */
     for (unsigned int i = 0; i < BODIES_COUNT; ++i) {
         state[i].position += state[i].velocity * dt;
+        if (printf) {
         std::ofstream myFile( "position.csv", std::ios::app ) ;
         myFile << state[i].name<< ";"<< state[i].position.x<< ";" << state[i].position.y << ";" << state[i].position.y <<"\n";
-        myFile.close();
+        myFile.close();}
     }
 }
 
@@ -253,16 +254,16 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     } else {
         const unsigned int n = atoi(argv[1]);
-        bool print;
-        std::istringstream (argv[2]) >> print;
-        if(print){
-        std::ofstream myFile("position.csv" );
-        myFile << "name of the body ; position x ; position y ; position z" "\n";
-        myFile.close();}
+        bool printf;
+        std::istringstream (argv[2]) >> printf;
+        if(printf){
+            std::ofstream myFile("position.csv" );
+            myFile << "Name of the body ; position x ; position y ; position z" "\n";
+            myFile.close();}
         offset_momentum(state);
         std::cout << energy(state) << std::endl;
         for (int i = 0; i < n; ++i) {
-            advance(state, 0.01);
+            advance(state, 0.01,printf);
         }
         std::cout << energy(state) << std::endl;
         return EXIT_SUCCESS;
