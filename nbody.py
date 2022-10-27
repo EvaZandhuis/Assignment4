@@ -79,7 +79,7 @@ PAIRS = tuple(combinations(SYSTEM))
 def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
     file = open('results.csv', 'w', newline='')
     writer = csv.writer(file)
-    writer.writerow(['name of the body;', 'position x;', 'position y;', 'position z;'])
+    writer.writerow(['name of the body; position x; position y; position z;'])
     bodies_list = list(BODIES.keys()) * n
     for i in range(n):
         for ([x1, y1, z1], v1, m1, [x2, y2, z2], v2, m2) in pairs:
@@ -101,7 +101,7 @@ def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
             r[1] += dt * vy
             r[2] += dt * vz
             i += 1
-            writer.writerow([bodies_list[i-1], r[0], r[1], r[2]])
+            writer.writerow([bodies_list[i-1] + ';' + str(r[0]) + ';' + str(r[1]) + ';' + str(r[2]) + ';'])
     file.close()
 
 
