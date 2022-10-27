@@ -1,4 +1,4 @@
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from time import perf_counter
 import subprocess
 duration = []
@@ -13,8 +13,8 @@ for i in n_list:
 print('duration =', duration)
 print("Elapsed time during the whole program in seconds:",
       stop_time - start_time)
-# plt.plot(n_list, duration)
-# plt.xlabel("x")
-# plt.ylabel("y")
-# #plt.loglog()
-# plt.show()
+plt.plot(n_list, duration)
+plt.xlabel("x")
+plt.ylabel("y")
+#plt.loglog()
+plt.show()
