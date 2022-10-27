@@ -10,7 +10,7 @@
 # slightly modified by bmmeijers
 
 
-import time
+
 import sys
 import csv
 from math import sqrt, pi as PI
@@ -73,7 +73,14 @@ SYSTEM = tuple(BODIES.values())
 PAIRS = tuple(combinations(SYSTEM))
 
 
+
+
+
 def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
+    file = open('results.csv', 'w', newline='')
+    writer = csv.writer(file)
+    writer.writerow(['name of the body;', 'position x;', 'position y;', 'position z;'])
+    bodies_list = list(BODIES.keys()) * n
     for i in range(n):
         for ([x1, y1, z1], v1, m1, [x2, y2, z2], v2, m2) in pairs:
             dx = x1 - x2
@@ -93,8 +100,9 @@ def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
             r[0] += dt * vx
             r[1] += dt * vy
             r[2] += dt * vz
-        # print(BODIES)
-        # print(r[0], r[1], r[2])
+            i += 1
+            writer.writerow([bodies_list[i-1], r[0], r[1], r[2]])
+    file.close()
 
 
 def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
@@ -141,7 +149,7 @@ def main(n, ref="sun"):
 #         step += 1
 #     return row_list
 
-# main(5)
+# main(10)
 # n = 50000000
 # a = main(n, 'sun')
 # main(n, 'jupiter')
@@ -149,11 +157,6 @@ def main(n, ref="sun"):
 # main(n, 'uranus')
 # main(n, 'neptune')
 #
-# with open('results.csv', 'w', newline='') as file:
-#     writer = csv.writer(file)
-#     writer.writerow(['Body', 'x', 'y', 'z'])
-#     for item in a:
-#         writer.writerow(item)
 
 
 

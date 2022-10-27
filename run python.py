@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from time import perf_counter
 import subprocess
 duration = []
 
-n_list = [5, 50, 500]
+n_list = [5000, 500000, 5000000, 50000000]
 path = r"C:\Users\Eva\Documents\TU\Master\Python programming\nbody\nbody.py"
 for i in n_list:
     start_time = perf_counter()
@@ -13,8 +13,8 @@ for i in n_list:
 print('duration =', duration)
 print("Elapsed time during the whole program in seconds:",
       stop_time - start_time)
-plt.plot(n_list, duration)
-plt.xlabel("x")
-plt.ylabel("y")
-#plt.loglog()
-plt.show()
+# plt.plot(n_list, duration)
+# plt.xlabel("x")
+# plt.ylabel("y")
+# #plt.loglog()
+# plt.show()
