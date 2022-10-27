@@ -15,7 +15,7 @@ import sys
 import csv
 from math import sqrt, pi as PI
 
-start_time = time.process_time()
+# start_time = time.process_time()
 
 def combinations(l):
     result = []
@@ -93,6 +93,8 @@ def advance(dt, n, bodies=SYSTEM, pairs=PAIRS):
             r[0] += dt * vx
             r[1] += dt * vy
             r[2] += dt * vz
+        # print(BODIES)
+        # print(r[0], r[1], r[2])
 
 
 def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
@@ -105,7 +107,7 @@ def report_energy(bodies=SYSTEM, pairs=PAIRS, e=0.0):
         e += m * (vx * vx + vy * vy + vz * vz) / 2.0
     # print("Energy: %.9f" % e)
     # print('x =', x2, 'y =', y2,'z =', z2,)
-    return x2, y2, z2
+    # return x2, y2, z2
 
 
 def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
@@ -119,47 +121,46 @@ def offset_momentum(ref, bodies=SYSTEM, px=0.0, py=0.0, pz=0.0):
     v[2] = pz / m
 
 # original
-# def main(n, ref="sun"):
-#     offset_momentum(BODIES[ref])
-#     report_energy()
-#     advance(0.01, n)
-#     report_energy()
-
-
-# adjusted
-row_list = []
-def main(n, ref):
+def main(n, ref="sun"):
     offset_momentum(BODIES[ref])
     report_energy()
-    step = 0
-    while step < n:
-        advance(0.01, step)
-        new_list = [ref, report_energy()[0], report_energy()[1], report_energy()[2]]
-        report_energy()
-        row_list.append(new_list)
-        step += 1
-    return row_list
+    advance(0.01, n)
+    report_energy()
 
+# # adjusted
+# row_list = []
+# def main(n, ref):
+#     offset_momentum(BODIES[ref])
+#     report_energy()
+#     step = 0
+#     while step < n:
+#         advance(0.01, step)
+#         new_list = [ref, report_energy()[0], report_energy()[1], report_energy()[2]]
+#         report_energy()
+#         row_list.append(new_list)
+#         step += 1
+#     return row_list
 
-n = 100
-a = main(n, 'sun')
-main(n, 'jupiter')
-main(n, 'saturn')
-main(n, 'uranus')
-main(n, 'neptune')
-
-with open('results.csv', 'w', newline='') as file:
-    writer = csv.writer(file)
-    writer.writerow(['Body', 'x', 'y', 'z'])
-    for item in a:
-        writer.writerow(item)
+# main(5)
+# n = 50000000
+# a = main(n, 'sun')
+# main(n, 'jupiter')
+# main(n, 'saturn')
+# main(n, 'uranus')
+# main(n, 'neptune')
+#
+# with open('results.csv', 'w', newline='') as file:
+#     writer = csv.writer(file)
+#     writer.writerow(['Body', 'x', 'y', 'z'])
+#     for item in a:
+#         writer.writerow(item)
 
 
 
 # https://stackoverflow.com/questions/1557571/how-do-i-get-time-of-a-python-programs-execution
 # cpu time instead of wall time:
 # https://pynative.com/python-get-execution-time-of-program/
-print("--- %s seconds ---" % (time.process_time() - start_time))
+# print("--- %s seconds ---" % (time.process_time() - start_time))
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2:
