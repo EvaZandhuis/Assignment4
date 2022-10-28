@@ -1,25 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
-# with printing:
-# python_5000 = 0.2980223000049591
-python_5000 = 0.1320603999774903
-python_500000 = 6.281164800049737
-python_5000000 = 56.26100910000969
-python_50000000 = 671.736297299969
-c_debug_5000 = 1
-c_debug_500000 = 2
-c_debug_5000000 = 3
-c_debug_50000000 = 4
-c_release_5000 = 5
-c_release_500000 = 6
-c_release_5000000 = 7
-c_release_50000000 = 8
-
-
-height = [python_5000, python_500000, python_5000000, python_50000000, c_debug_5000, c_debug_500000, c_debug_5000000, c_debug_50000000, c_release_5000, c_release_500000, c_release_5000000, c_release_5000000]
-bars = ('Python 5.000', 'Python 500.000', 'Python 5.000.000', 'Python 50.000.000', 'c++ debug 5.000', 'c++ debug 500.000', 'c++ debug 5.000.000', 'c_debug_50.000.000', 'c++ release 5.000', 'c++ release 500.000', 'c++ release 5.000.000', 'c_release_50.000.000')
-y_pos = np.arange(len(bars))
-plt.bar(y_pos, height, color=['green', 'orange', 'red', 'black'])
-plt.xticks(y_pos, bars, rotation=270)
+iterations = ['5000','500000','5000000','50000000']
+programmes= ['Python', 'C++ Debug', 'C++ Release']
+pos = np.arange(len(iterations))
+bar_width = 0.25
+python=[0.132,6.281,56.261,671.736]
+cdebug=[0.629,0.735,7.302,73.079]
+crelease=[0.055,0.115,0.727,5.952]
+plt.bar(pos,python,bar_width,color='blue',edgecolor='black')
+plt.bar(pos+bar_width,cdebug,bar_width,color='pink',edgecolor='black')
+plt.bar(pos+2*bar_width,crelease,bar_width,color='red',edgecolor='black')
+plt.xticks(pos, iterations)
+plt.xlabel('Instance size', fontsize=16)
+plt.ylabel('Run time [s]', fontsize=16)
+plt.title('Comparison Python, C++ Debug and C++ Release',fontsize=16)
+plt.legend(programmes,loc=2)
 plt.show()
